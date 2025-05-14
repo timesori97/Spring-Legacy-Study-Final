@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="www.silver.dao.IF_bbsDAO">
+	<insert id="insertOne" parameterType="www.silver.VO.BBSVO">
+		insert into kbbs 
+		values (bbs_seq.nextval,#{title},#{name},#{body},default,default,#{s_flag}) <!-- bbsvo getter -->
+	</insert>
+	<insert id="insertAttach">
+		insert into kbbs_attach
+		values ((select max(no) from kbbs),#{filename},default)
+	</insert>
+
+			<!--  전체보기 select * from kbbs order by wdate desc -->
+	<select id="selectall" resultType="www.silver.VO.BBSVO"
+	 parameterType="www.silver.VO.PageVO">
+		select t.* from (select sub.*, rownum as rnum from (select * from
+		kbbs order by no DESC) sub) t
+		where rnum between #{startNo} and #{endNo}
+	</select>
+	<select id="totalcnt" resultType="int">
+		select count(*) from kbbs
+	</select>	
+	<delete id="deleteone" parameterType="String">
+		delete from kbbs where no = #{no}
+	</delete>
+	<select id="selectone" resultType="www.silver.VO.BBSVO">
+		select * from kbbs where no = #{no}
+	</select>
+	<update id="update">
+		update kbbs set title=#{title}, body=#{body} where no = #{no}
+	</update>
+	
+
+</mapper> 

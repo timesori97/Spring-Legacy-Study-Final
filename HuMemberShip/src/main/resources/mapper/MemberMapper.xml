@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="www.silver.dao.IF_MemberDAO">
+	<insert id="insertone" parameterType="www.silver.VO.MemberVO">
+		insert into kuser values(#{id},#{pass},#{name},#{addr},#{tel},kuser_seq.nextval)
+	</insert>
+	<select id="selectall" resultType="www.silver.VO.MemberVO">
+		select * from kuser
+	</select>
+	<delete id="delete">
+		delete from 테이블명
+	</delete>
+	<select id="selectOne" resultType="www.silver.VO.MemberVO" parameterType="String" >
+		select * from kuser where id=#{id}
+	</select>
+	<insert id="kuser_attach" parameterType="String">
+		insert into kuser_attach values ((select max(no) from kuser),#{filename}, default)
+	</insert>
+	<select id="getAttach" resultType="String" parameterType="String">
+		select filename from kuser_attach where no = #{no}	
+	</select>
+</mapper>
